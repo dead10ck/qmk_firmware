@@ -178,6 +178,16 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
 
 };
 
+uint16_t get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LSFT_T(KC_TAB):
+        case LSFT_T(KC_BSPACE):
+            return true;
+        default:
+            return false;
+    }
+}
+
 void set_layer_color(int layer) {
   for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
     HSV hsv = {
