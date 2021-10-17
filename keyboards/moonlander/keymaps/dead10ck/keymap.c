@@ -72,6 +72,7 @@ enum custom_keycodes {
   ST_MACRO_64,
   ST_MACRO_65,
   ST_MACRO_66,
+  ALT_TAB,
 };
 
 
@@ -153,6 +154,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+uint16_t active_sticky_mod = 0;
+uint16_t sticky_mod_timer = 0;
+
 uint16_t get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_TAB):
@@ -166,6 +170,11 @@ uint16_t get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
+  if (active_sticky_mod && timer_elapsed(alt_tab_timer) > 1000) {
+    unregister_code(active_sticky_mod);
+    active_sticky_mod = 0;
+  }
+
   LEADER_DICTIONARY() {
     leading = false;
 
@@ -227,24 +236,45 @@ void rgb_matrix_indicators_user(void) {
   }
 }
 
+void sticky_mod(uint16_t mod_key, uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    if (active_sticky_mod && active_sticky_mod != mod_key) {
+      unregister_code(active_sticky_mod);
+      active_sticky_mod = 0;
+    }
+
+    if (!active_sticky_mod) {
+      register_code(mod_key);
+      active_sticky_mod = mod_key;
+    }
+
+    sticky_mod_timer = timer_read();
+    register_code(keycode);
+  } else {
+    unregister_code(keycode);
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case ALT_TAB:
+      sticky_mod(KC_ALT, KC_TAB);
+      break;
+
+    // Macros
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_LCTL(SS_TAP(X_B)) SS_DELAY(100) SS_TAP(X_1));
-
     }
     break;
     case ST_MACRO_1:
     if (record->event.pressed) {
       SEND_STRING(SS_LCTL(SS_TAP(X_B)) SS_DELAY(100) SS_TAP(X_2));
-
     }
     break;
     case ST_MACRO_2:
     if (record->event.pressed) {
       SEND_STRING(SS_LCTL(SS_TAP(X_B)) SS_DELAY(100) SS_TAP(X_3));
-
     }
     break;
     case ST_MACRO_3:
