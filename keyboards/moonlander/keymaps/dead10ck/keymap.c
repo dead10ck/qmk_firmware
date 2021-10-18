@@ -101,22 +101,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [1] = LAYOUT_moonlander(
-    _______,          _______,       _______,       _______,           _______,         _______,       _______,     _______, _______,  _______,  _______,   _______,      _______,      _______, 
-    _______,          _______,       _______,       KC_F,              KC_P,            KC_G,          _______,     _______, KC_J,     KC_L,     KC_U,      KC_Y,         KC_SCOLON,    _______, 
-    _______,          _______,       KC_R,          KC_S,              KC_T,            KC_D,          _______,     TO(0),   _______,  KC_N,     KC_E,      KC_I,         KC_O,         _______, 
-    _______,          _______,       _______,       _______,           _______,         _______,                             KC_K,     _______,  _______,   _______,      _______,      _______, 
-    _______,          _______,       _______,       _______,           _______,         _______,                             _______,  _______,  _______,   _______,      _______,      _______, 
+    _______,          _______,       _______,       _______,           _______,         _______,       _______,     _______, _______,  _______,  _______,   _______,      _______,      _______,
+    _______,          _______,       _______,       KC_F,              KC_P,            KC_G,          _______,     _______, KC_J,     KC_L,     KC_U,      KC_Y,         KC_SCOLON,    _______,
+    _______,          _______,       KC_R,          KC_S,              KC_T,            KC_D,          _______,     TO(0),   _______,  KC_N,     KC_E,      KC_I,         KC_O,         _______,
+    _______,          _______,       _______,       _______,           _______,         _______,                             KC_K,     _______,  _______,   _______,      _______,      _______,
+    _______,          _______,       _______,       _______,           _______,         _______,                             _______,  _______,  _______,   _______,      _______,      _______,
                                                     _______,           _______,         _______,                             _______,  _______,  _______
   ),
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [2] = LAYOUT_moonlander(
-    KC_ESC,           KC_F1,         KC_F2,         KC_F3,             KC_F4,           KC_F5,          _______,    _______, KC_F6,    KC_F7,   KC_F8,      KC_F9,        KC_F10,      KC_F11,         
-    _______,          KC_EXLM,       KC_AT,         KC_LCBR,           KC_RCBR,         KC_AMPR,        KC_PIPE,    TO(3),   KC_HOME,  KC_PGDN, KC_PGUP,    KC_END,       _______,     KC_F12,         
-    _______,          KC_HASH,       KC_DLR,        KC_LPRN,           KC_RPRN,         KC_GRAVE,       KC_HOME,    KC_END,  KC_LEFT,  KC_DOWN, KC_UP,      KC_RIGHT,     _______,     _______, 
-    _______,          KC_PERC,       KC_CIRC,       KC_LBRACKET,       KC_RBRACKET,     KC_TILD,                             _______, _______,  _______,    _______,      KC_RCTRL,    KC_RSHIFT,      
-    _______,          KC_COMMA,      KC_LGUI,       KC_LABK,           KC_RABK,         _______,                             _______, KC_LGUI,  _______,    _______,      _______,     _______, 
-                                                    _______,           _______,         _______,                             _______, _______,  _______
+    KC_ESC,           KC_F1,         KC_F2,         KC_F3,             KC_F4,           KC_F5,          _______,    _______, KC_F6,    KC_F7,   KC_F8,      KC_F9,        KC_F10,      KC_F11,
+    _______,          KC_EXLM,       KC_AT,         KC_LCBR,           KC_RCBR,         KC_AMPR,        KC_PIPE,    TO(3),   KC_HOME,  KC_PGDN, KC_PGUP,    KC_END,       _______,     KC_F12,
+    _______,          KC_HASH,       KC_DLR,        KC_LPRN,           KC_RPRN,         KC_GRAVE,       KC_HOME,    KC_END,  KC_LEFT,  KC_DOWN, KC_UP,      KC_RIGHT,     _______,     _______,
+    _______,          KC_PERC,       KC_CIRC,       KC_LBRACKET,       KC_RBRACKET,     KC_TILD,                             _______, _______,  _______,    _______,      KC_RCTRL,    KC_RSHIFT,
+    _______,          KC_COMMA,      KC_LGUI,       KC_LABK,           KC_RABK,         _______,                             _______, KC_LGUI,  _______,    _______,      _______,     _______,
+                                                    _______,           _______,         _______,                             CTRL_TAB,ALT_GRAVE,ALT_TAB
   ),
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
@@ -221,10 +221,10 @@ void sticky_mod(uint16_t mod_key, uint16_t keycode, keyrecord_t *record) {
         }
 
         sticky_mod_timer = timer_read();
-        register_code(keycode);
+        tap_code(keycode);
         active_sticky_mod_pressed = true;
     } else {
-        unregister_code(keycode);
+        // we've already released it
         active_sticky_mod_pressed = false;
     }
 }
@@ -233,15 +233,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case ALT_TAB:
             sticky_mod(KC_LALT, KC_TAB, record);
-            break;
+            return false;
 
         case CTRL_TAB:
             sticky_mod(KC_LCTRL, KC_TAB, record);
-            break;
+            return false;
 
         case ALT_GRAVE:
             sticky_mod(KC_LALT, KC_GRAVE, record);
-            break;
+            return false;
 
         // Macros
         case ST_MACRO_0:
