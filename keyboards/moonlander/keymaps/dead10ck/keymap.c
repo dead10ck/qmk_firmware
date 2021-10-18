@@ -74,6 +74,8 @@ enum custom_keycodes {
     ST_MACRO_65,
     ST_MACRO_66,
     ALT_TAB,
+    CTRL_TAB,
+    ALT_GRAVE,
 };
 
 enum tap_dance_codes {
@@ -84,9 +86,10 @@ enum tap_dance_codes {
     D_WKSP_R,
 };
 
-// clang-format off
+// clang-format off !=
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_moonlander(
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
     //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
     KC_DELETE,        KC_1,          KC_2,          KC_3,              KC_4,            KC_5,          KC_HOME,     KC_END,  KC_6,     KC_7,     KC_8,      KC_9,         KC_0,         KC_MINUS,
     KC_AMPR,          KC_Q,          KC_W,          KC_E,              KC_R,            KC_T,          KC_PIPE,     TO(2),   KC_Y,     KC_U,     KC_I,      KC_O,         KC_P,         KC_BSLASH,
@@ -95,22 +98,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TD(D_SYS),        TD(D_CAPS),    KC_LGUI,       OSL(5),            OSL(4),          LALT(KC_TAB),                        TG(6),    KC_LGUI,  KC_RALT,   TD(D_WKSP_L), TD(D_WKSP_R), MO(3),
                                                     LCTL_T(KC_ENTER),  LSFT_T(KC_TAB),  TD(D_ALT_BACKTICK),                         KC_LALT,  LSFT_T(KC_BSPACE), LCTL_T(KC_SPACE)
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [1] = LAYOUT_moonlander(
     _______,          _______,       _______,       _______,           _______,         _______,       _______,     _______, _______,  _______,  _______,   _______,      _______,      _______, 
     _______,          _______,       _______,       KC_F,              KC_P,            KC_G,          _______,     _______, KC_J,     KC_L,     KC_U,      KC_Y,         KC_SCOLON,    _______, 
     _______,          _______,       KC_R,          KC_S,              KC_T,            KC_D,          _______,     TO(0),   _______,  KC_N,     KC_E,      KC_I,         KC_O,         _______, 
     _______,          _______,       _______,       _______,           _______,         _______,                             KC_K,     _______,  _______,   _______,      _______,      _______, 
-    _______,          _______,       _______,       _______,           _______,         _______,                                                                                                 _______, _______, _______, _______, _______, _______, 
+    _______,          _______,       _______,       _______,           _______,         _______,                             _______,  _______,  _______,   _______,      _______,      _______, 
                                                     _______,           _______,         _______,                             _______,  _______,  _______
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [2] = LAYOUT_moonlander(
-    KC_ESCAPE,      KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          _______,                                 _______, KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         
-    _______, KC_EXLM,        KC_AT,          KC_LCBR,        KC_RCBR,        KC_AMPR,        KC_PIPE,                                        TO(3),          KC_HOME,        KC_PGDOWN,      KC_PGUP,        KC_END,         _______, KC_F12,         
-    _______, KC_HASH,        KC_DLR,         KC_LPRN,        KC_RPRN,        KC_GRAVE,       KC_HOME,                                                                        KC_END,         KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       _______, _______, 
-    _______, KC_PERC,        KC_CIRC,        KC_LBRACKET,    KC_RBRACKET,    KC_TILD,                                        _______, _______, _______, _______, KC_RCTRL,       KC_RSHIFT,      
-    _______, KC_COMMA,       KC_LGUI,        KC_LABK,        KC_RABK,        _______,                                                                                                 _______, KC_LGUI,        _______, _______, _______, _______, 
-    _______, _______, _______,                 _______, _______, _______
+    KC_ESC,           KC_F1,         KC_F2,         KC_F3,             KC_F4,           KC_F5,          _______,    _______, KC_F6,    KC_F7,   KC_F8,      KC_F9,        KC_F10,      KC_F11,         
+    _______,          KC_EXLM,       KC_AT,         KC_LCBR,           KC_RCBR,         KC_AMPR,        KC_PIPE,    TO(3),   KC_HOME,  KC_PGDN, KC_PGUP,    KC_END,       _______,     KC_F12,         
+    _______,          KC_HASH,       KC_DLR,        KC_LPRN,           KC_RPRN,         KC_GRAVE,       KC_HOME,    KC_END,  KC_LEFT,  KC_DOWN, KC_UP,      KC_RIGHT,     _______,     _______, 
+    _______,          KC_PERC,       KC_CIRC,       KC_LBRACKET,       KC_RBRACKET,     KC_TILD,                             _______, _______,  _______,    _______,      KC_RCTRL,    KC_RSHIFT,      
+    _______,          KC_COMMA,      KC_LGUI,       KC_LABK,           KC_RABK,         _______,                             _______, KC_LGUI,  _______,    _______,      _______,     _______, 
+                                                    _______,           _______,         _______,                             _______, _______,  _______
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [3] = LAYOUT_moonlander(
     AU_TOG,         _______, _______, _______, _______, _______, _______,                                 _______, _______, _______, _______, _______, _______, _______, 
     MU_TOG,         _______, _______, KC_MS_UP,       _______, _______, _______,                                 TO(0),          _______, _______, _______, _______, _______, _______, 
@@ -119,6 +128,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RGB_SPD,        RGB_SPI,        _______, KC_MS_BTN1,     KC_MS_BTN2,     RGB_MOD,                                                                                                        RGB_TOG,        KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_AUDIO_MUTE,  LALT(LCTL(LGUI(LSFT(KC_M)))),_______, 
     RGB_VAD,        RGB_VAI,        TOGGLE_LAYER_COLOR,                RGB_SLD,        RGB_HUD,        RGB_HUI
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [4] = LAYOUT_moonlander(
     _______, ST_MACRO_0,     ST_MACRO_1,     ST_MACRO_2,     ST_MACRO_3,     ST_MACRO_4,     _______,                                 _______, ST_MACRO_13,    ST_MACRO_14,    ST_MACRO_15,    ST_MACRO_16,    ST_MACRO_17,    _______, 
     _______, ST_MACRO_5,     ST_MACRO_6,     ST_MACRO_7,     ST_MACRO_8,     _______, _______,                                 _______, ST_MACRO_18,    ST_MACRO_19,    ST_MACRO_20,    ST_MACRO_21,    ST_MACRO_22,    _______, 
@@ -127,6 +138,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______,                                                                                                 _______, _______, _______, _______, _______, _______, 
     _______, _______, _______,                 _______, _______, ST_MACRO_29
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [5] = LAYOUT_moonlander(
     _______, ST_MACRO_30,    ST_MACRO_31,    ST_MACRO_32,    ST_MACRO_33,    ST_MACRO_34,    _______,                                 _______, ST_MACRO_43,    ST_MACRO_44,    ST_MACRO_45,    ST_MACRO_46,    ST_MACRO_47,    _______, 
     _______, ST_MACRO_35,    ST_MACRO_36,    ST_MACRO_37,    ST_MACRO_38,    _______, _______,                                 _______, ST_MACRO_48,    ST_MACRO_49,    ST_MACRO_50,    ST_MACRO_51,    ST_MACRO_52,    _______, 
@@ -135,6 +148,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______,                                                                                                 _______, _______, _______, _______, _______, _______, 
     _______, _______, _______,                 _______, _______, ST_MACRO_59
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [6] = LAYOUT_moonlander(
     _______, _______, _______, _______, _______, _______, _______,                                 _______, _______, ST_MACRO_60,    KC_KP_SLASH,    KC_KP_ASTERISK, KC_KP_MINUS,    _______, 
     _______, _______, _______, _______, _______, _______, _______,                                 _______, _______, KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_PLUS,     _______, 
@@ -143,6 +158,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______,                                                                                                 _______, KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_ENTER,    _______, 
     _______, _______, _______,                 _______, KC_BSPACE,      KC_KP_ENTER
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
   [7] = LAYOUT_moonlander(
     LALT(LCTL(KC_DELETE)),LALT(LCTL(KC_F1)),LALT(LCTL(KC_F2)),LALT(LCTL(KC_F3)),_______, _______, _______,                                 _______, _______, _______, _______, _______, _______, RESET,          
     _______, _______, _______, _______, _______, _______, _______,                                 TO(0),          _______, _______, _______, _______, _______, _______, 
@@ -151,6 +168,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______,                                                                                                 _______, _______, _______, _______, _______, _______, 
     _______, _______, _______,                 _______, _______, _______
   ),
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
+    //              |              |              |                  |                |              |           ||        |         |        |          |             |             |
 };
 // clang-format on
 
@@ -214,6 +233,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case ALT_TAB:
             sticky_mod(KC_LALT, KC_TAB, record);
+            break;
+
+        case CTRL_TAB:
+            sticky_mod(KC_LCTRL, KC_TAB, record);
+            break;
+
+        case ALT_GRAVE:
+            sticky_mod(KC_LALT, KC_GRAVE, record);
             break;
 
         // Macros
