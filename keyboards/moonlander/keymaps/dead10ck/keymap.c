@@ -213,7 +213,7 @@ void sticky_mod(uint16_t mod_key, uint16_t keycode, keyrecord_t *record) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case ALT_TAB:
-            sticky_mod(KC_ALT, KC_TAB);
+            sticky_mod(KC_LALT, KC_TAB, record);
             break;
 
         // Macros
@@ -563,25 +563,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 extern rgb_config_t rgb_matrix_config;
 
-void keyboard_post_init_user(void) { rgb_matrix_enable(); }
-
-void rgb_matrix_indicators_user(void) {
-    if (keyboard_config.disable_layer_led) {
-        return;
-    }
-    switch (biton32(layer_state)) {
-        case 6:
-            set_layer_color(6);
-            break;
-        case 7:
-            set_layer_color(7);
-            break;
-        default:
-            if (rgb_matrix_get_flags() == LED_FLAG_NONE) rgb_matrix_set_color_all(0, 0, 0);
-            break;
-    }
-}
-
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     [6] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {15, 97, 236}, {27, 126, 255}, {27, 126, 255}, {254, 198, 190}, {254, 198, 190}, {15, 176, 169}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {146, 224, 255}, {169, 120, 255}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {254, 198, 190}, {233, 218, 217}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {254, 198, 190}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {254, 198, 190}, {205, 255, 255}, {0, 0, 0}, {0, 0, 0}},
     [7] = {{0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245},
@@ -602,6 +583,25 @@ void set_layer_color(int layer) {
             float f   = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
             rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
         }
+    }
+}
+
+void keyboard_post_init_user(void) { rgb_matrix_enable(); }
+
+void rgb_matrix_indicators_user(void) {
+    if (keyboard_config.disable_layer_led) {
+        return;
+    }
+    switch (biton32(layer_state)) {
+        case 6:
+            set_layer_color(6);
+            break;
+        case 7:
+            set_layer_color(7);
+            break;
+        default:
+            if (rgb_matrix_get_flags() == LED_FLAG_NONE) rgb_matrix_set_color_all(0, 0, 0);
+            break;
     }
 }
 
