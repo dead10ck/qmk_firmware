@@ -259,6 +259,9 @@ void sticky_mod(uint16_t mod_key, uint16_t keycode, keyrecord_t *record) {
         tap_code(keycode);
         active_sticky_mod_pressed = true;
     } else {
+        // start the timer again when we release
+        sticky_mod_timer = timer_read();
+
         // we've already released it
         active_sticky_mod_pressed = false;
     }
