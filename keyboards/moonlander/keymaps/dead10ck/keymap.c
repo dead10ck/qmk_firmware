@@ -1,3 +1,5 @@
+// vim: nowrap
+
 #include QMK_KEYBOARD_H
 #include "version.h"
 
@@ -237,7 +239,7 @@ void matrix_scan_user(void) {
 
     LEADER_DICTIONARY() {
         leading = false;
-        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING("ls -alh\n"); }
+        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING("ls -alh"); }
         SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP)); }
         leader_end();
     }
