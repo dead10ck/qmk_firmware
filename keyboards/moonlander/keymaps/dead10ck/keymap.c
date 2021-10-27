@@ -306,7 +306,7 @@ void matrix_scan_user(void) {
     LEADER_DICTIONARY() {
         leading = false;
         SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING("ls -alh\n"); }
-        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING("aws s3 ls --human s3://"); }
+        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING("aws s3 ls --human "); }
         SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP)); }
         SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING("tai64nlocal"); }
         SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING("tail -F  | tai64nlocal" SS_TAP(X_HOME) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT)); }
