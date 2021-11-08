@@ -314,6 +314,8 @@ void matrix_scan_user(void) {
         SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING("tail -F  | tai64nlocal" SS_TAP(X_HOME) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT)); }
         SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING("tmux a || tmux\n"); }
         SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING("sudo -i\n"); }
+        SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING("ps -aefH"); }
+        SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING("ps -aefH | less\n"); }
         leader_end();
     }
 }
