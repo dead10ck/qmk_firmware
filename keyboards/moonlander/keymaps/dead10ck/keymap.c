@@ -308,10 +308,10 @@ void matrix_scan_user(void) {
         SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING("ls -alh\n"); }
         SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING("aws s3 ls --human "); }
         SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP)); }
-        SEQ_FOUR_KEYS(KC_C, KC_B, KC_P, KC_P) { SEND_STRING(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)) SS_TAP(X_BSPACE)); }
-        SEQ_THREE_KEYS(KC_C, KC_B, KC_P) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)) SS_TAP(X_BSPACE)); }
+        SEQ_FOUR_KEYS(KC_C, KC_B, KC_P, KC_P) { SEND_STRING(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V))); }
+        SEQ_THREE_KEYS(KC_C, KC_B, KC_P) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V))); }
         SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING("tai64nlocal"); }
-        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING("tail -F  | tai64nlocal" SS_TAP(X_HOME) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT)); }
+        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT)); }
         SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING("tmux a || tmux\n"); }
         SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING("sudo -i\n"); }
         SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING("ps -aefH"); }
