@@ -85,7 +85,6 @@ enum custom_keycodes {
 enum tap_dance_codes {
     D_SYS,
     D_CAPS,
-    D_ALT_BACKTICK,
     D_WKSP_L,
     D_WKSP_R,
     D_TMUX,
@@ -138,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          TD(D_SYS),     TD(D_CAPS),     KC_LGUI,OSL(L_TMUX),OSL(L_NAV),LALT(KC_TAB),                           TG(L_NUMPAD),OSL(L_SYMB),KC_LGUI, TD(D_WKSP_L), TD(D_WKSP_R), MO(L_MEDIA),
     //|______________|______________|______________|________|________|______________|_________       ___________|_________|________|__________|_____________|_____________|_____________|
     //                                |                  |                |                   |     |           |                  |                |
-                                       LCTL_T(KC_ENTER),  LSFT_T(KC_TAB),  TD(D_ALT_BACKTICK),         KC_LALT,  LSFT_T(KC_BSPACE), LCTL_T(KC_SPACE)
+                                       LCTL_T(KC_ENTER),  LSFT_T(KC_TAB),        KC_LALT,              KC_LALT,  LSFT_T(KC_BSPACE), LCTL_T(KC_SPACE)
     //                                |__________________|________________|___________________|     |___________|__________________|________________|
   ),
 
@@ -836,64 +835,7 @@ void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     dance_state[1].step = 0;
 }
-void on_dance_2(qk_tap_dance_state_t *state, void *user_data);
-void dance_2_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_2_reset(qk_tap_dance_state_t *state, void *user_data);
 
-void on_dance_2(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 3) {
-        tap_code16(KC_GRAVE);
-        tap_code16(KC_GRAVE);
-        tap_code16(KC_GRAVE);
-    }
-    if (state->count > 3) {
-        tap_code16(KC_GRAVE);
-    }
-}
-
-void dance_2_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state[2].step = dance_step(state);
-    switch (dance_state[2].step) {
-        case SINGLE_TAP:
-            register_code16(KC_GRAVE);
-            break;
-        case SINGLE_HOLD:
-            register_code16(KC_LALT);
-            break;
-        case DOUBLE_TAP:
-            register_code16(KC_GRAVE);
-            register_code16(KC_GRAVE);
-            break;
-        case DOUBLE_HOLD:
-            register_code16(LSFT(KC_GRAVE));
-            break;
-        case DOUBLE_SINGLE_TAP:
-            tap_code16(KC_GRAVE);
-            register_code16(KC_GRAVE);
-    }
-}
-
-void dance_2_reset(qk_tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[2].step) {
-        case SINGLE_TAP:
-            unregister_code16(KC_GRAVE);
-            break;
-        case SINGLE_HOLD:
-            unregister_code16(KC_LALT);
-            break;
-        case DOUBLE_TAP:
-            unregister_code16(KC_GRAVE);
-            break;
-        case DOUBLE_HOLD:
-            unregister_code16(LSFT(KC_GRAVE));
-            break;
-        case DOUBLE_SINGLE_TAP:
-            unregister_code16(KC_GRAVE);
-            break;
-    }
-    dance_state[2].step = 0;
-}
 void on_dance_3(qk_tap_dance_state_t *state, void *user_data);
 void dance_3_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_3_reset(qk_tap_dance_state_t *state, void *user_data);
@@ -989,7 +931,6 @@ void dance_4_reset(qk_tap_dance_state_t *state, void *user_data) {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [D_SYS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_0_finished, dance_0_reset),
     [D_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_1_finished, dance_1_reset),
-    [D_ALT_BACKTICK] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_2, dance_2_finished, dance_2_reset),
     [D_WKSP_L] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_3, dance_3_finished, dance_3_reset),
     [D_WKSP_R] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_4, dance_4_finished, dance_4_reset),
 };
