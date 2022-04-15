@@ -321,17 +321,24 @@ void matrix_scan_user(void) {
 
     LEADER_DICTIONARY() {
         leading = false;
-        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING("ls -alh\n"); }
-        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING("aws s3 ls --human "); }
         SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP)); }
         SEQ_FOUR_KEYS(KC_C, KC_B, KC_P, KC_P) { SEND_STRING(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V))); }
         SEQ_THREE_KEYS(KC_C, KC_B, KC_P) { SEND_STRING("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V))); }
-        SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING("tai64nlocal"); }
-        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT)); }
+
+        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING("ls -alh\n"); }
+        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING("aws s3 ls --human "); }
         SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING("tmux a || tmux\n"); }
         SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING("sudo -i\n"); }
         SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING("ps -aefH"); }
         SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING("ps -aefH | less\n"); }
+
+        SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING("tai64nlocal"); }
+        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT)); }
+
+        SEQ_TWO_KEYS(KC_O, KC_S) { SEND_STRING("source /opt/SGraph/scripts/oozie-env.sh\n"); }
+        SEQ_THREE_KEYS(KC_O, KC_J, KC_I) { SEND_STRING("oozie job -info '" SS_DELAY(300) SS_LSFT(SS_LCTL("v")) SS_DELAY(300) "'\n"); }
+        SEQ_THREE_KEYS(KC_O, KC_J, KC_S) { SEND_STRING("oozie jobs -jobtype "); }
+
         leader_end();
     }
 }
