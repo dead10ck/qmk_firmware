@@ -294,7 +294,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 uint16_t active_sticky_mod         = 0;
 uint16_t sticky_mod_timer          = 0;
 bool     active_sticky_mod_pressed = false;
-int      send_string_waitms        = 35;
+int      ss_waitms                 = 35;
+int      ss_waitms_long            = 50;
 
 
 uint16_t get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
@@ -322,23 +323,23 @@ void matrix_scan_user(void) {
     
     LEADER_DICTIONARY() {
         leading = false;
-        SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP), send_string_waitms); }
-        SEQ_FOUR_KEYS(KC_C, KC_B, KC_P, KC_P) { SEND_STRING_DELAY(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), send_string_waitms); }
-        SEQ_THREE_KEYS(KC_C, KC_B, KC_P) { SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), send_string_waitms); }
+        SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP), ss_waitms); }
+        SEQ_FOUR_KEYS(KC_C, KC_B, KC_P, KC_P) { SEND_STRING_DELAY(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms); }
+        SEQ_THREE_KEYS(KC_C, KC_B, KC_P) { SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms); }
 
-        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING_DELAY("ls -alh\n", send_string_waitms); }
-        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING_DELAY("aws s3 ls --human ", send_string_waitms); }
-        SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING_DELAY("tmux a || tmux\n", send_string_waitms); }
-        SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING_DELAY("sudo -i\n", send_string_waitms); }
-        SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING_DELAY("ps -aefH", send_string_waitms); }
-        SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING_DELAY("ps -aefH | less\n", send_string_waitms); }
+        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING_DELAY("ls -alh\n", ss_waitms_long); }
+        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms); }
+        SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING_DELAY("tmux a || tmux\n", ss_waitms_long); }
+        SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING_DELAY("sudo -i\n", ss_waitms_long); }
+        SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING_DELAY("ps -aefH", ss_waitms_long); }
+        SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING_DELAY("ps -aefH | less\n", ss_waitms_long); }
 
-        SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING_DELAY("tai64nlocal", send_string_waitms); }
-        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING_DELAY("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT), send_string_waitms); }
+        SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING_DELAY("tai64nlocal", ss_waitms_long); }
+        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING_DELAY("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT), ss_waitms_long); }
 
-        SEQ_TWO_KEYS(KC_O, KC_S) { SEND_STRING_DELAY("source /opt/SGraph/scripts/oozie-env.sh\n", send_string_waitms); }
-        SEQ_THREE_KEYS(KC_O, KC_J, KC_I) { SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", send_string_waitms); }
-        SEQ_THREE_KEYS(KC_O, KC_J, KC_S) { SEND_STRING_DELAY("oozie jobs -jobtype ", send_string_waitms); }
+        SEQ_TWO_KEYS(KC_O, KC_S) { SEND_STRING_DELAY("source /opt/SGraph/scripts/oozie-env.sh\n", ss_waitms_long); }
+        SEQ_THREE_KEYS(KC_O, KC_J, KC_I) { SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms_long); }
+        SEQ_THREE_KEYS(KC_O, KC_J, KC_S) { SEND_STRING_DELAY("oozie jobs -jobtype ", ss_waitms_long); }
 
         leader_end();
     }
@@ -385,337 +386,337 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Macros
         case M_TM_1:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_1), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_1), ss_waitms);
             }
             break;
         case M_TM_2:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_2), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_2), ss_waitms);
             }
             break;
         case M_TM_3:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_3), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_3), ss_waitms);
             }
             break;
         case M_TM_4:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_4), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_4), ss_waitms);
             }
             break;
         case M_TM_5:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_5), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_5), ss_waitms);
             }
             break;
         case M_TM_QUOT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_QUOTE)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_QUOTE)), ss_waitms);
             }
             break;
         case M_TM_PCNT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_5)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_5)), ss_waitms);
             }
             break;
         case M_TM_AST:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_8)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_8)), ss_waitms);
             }
             break;
         case M_TM_LPRN:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_9)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_9)), ss_waitms);
             }
             break;
         case M_TM_LBRKT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LBRACKET), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LBRACKET), ss_waitms);
             }
             break;
         case M_TM_D:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_D), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_D), ss_waitms);
             }
             break;
         case M_TM_X:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_X), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_X), ss_waitms);
             }
             break;
         case M_TM_C:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_C), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_C), ss_waitms);
             }
             break;
         case M_TM_6:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_6), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_6), ss_waitms);
             }
             break;
         case M_TM_7:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_7), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_7), ss_waitms);
             }
             break;
         case M_TM_8:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_8), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_8), ss_waitms);
             }
             break;
         case M_TM_9:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_9), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_9), ss_waitms);
             }
             break;
         case M_TM_0:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_0), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_0), ss_waitms);
             }
             break;
         case M_TM_CLEFT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_LEFT)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_LEFT)), ss_waitms);
             }
             break;
         case M_TM_CDOWN:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_DOWN)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_DOWN)), ss_waitms);
             }
             break;
         case M_TM_CUP:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_UP)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_UP)), ss_waitms);
             }
             break;
         case M_TM_CRIGHT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_RIGHT)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_RIGHT)), ss_waitms);
             }
             break;
         case M_TM_P:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_P), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_P), ss_waitms);
             }
             break;
         case M_TM_LEFT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LEFT), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LEFT), ss_waitms);
             }
             break;
         case M_TM_DOWN:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_DOWN), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_DOWN), ss_waitms);
             }
             break;
         case M_TM_UP:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_UP), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_UP), ss_waitms);
             }
             break;
         case M_TM_RIGHT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_RIGHT), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_RIGHT), ss_waitms);
             }
             break;
         case M_TM_COLON:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SCOLON)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SCOLON)), ss_waitms);
             }
             break;
         case M_TM_N:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_N), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_N), ss_waitms);
             }
             break;
         case M_TM_SPC:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_SPACE), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_SPACE), ss_waitms);
             }
             break;
         case M_NTM_1:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_1), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_1), ss_waitms_long);
             }
             break;
         case M_NTM_2:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_2), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_2), ss_waitms_long);
             }
             break;
         case M_NTM_3:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_3), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_3), ss_waitms_long);
             }
             break;
         case M_NTM_4:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_4), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_4), ss_waitms_long);
             }
             break;
         case M_NTM_5:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_5), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_5), ss_waitms_long);
             }
             break;
         case M_NTM_QUOT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_QUOTE)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_QUOTE)), ss_waitms_long);
             }
             break;
         case M_NTM_PCNT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_5)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_5)), ss_waitms_long);
             }
             break;
         case M_NTM_AST:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_8)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_8)), ss_waitms_long);
             }
             break;
         case M_NTM_LPRN:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_9)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_9)), ss_waitms_long);
             }
             break;
         case M_NTM_LBRKT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LBRACKET), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LBRACKET), ss_waitms_long);
             }
             break;
         case M_NTM_D:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_D), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_D), ss_waitms_long);
             }
             break;
         case M_NTM_X:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_X), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_X), ss_waitms_long);
             }
             break;
         case M_NTM_C:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_C), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_C), ss_waitms_long);
             }
             break;
         case M_NTM_6:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_6), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_6), ss_waitms_long);
             }
             break;
         case M_NTM_7:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_7), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_7), ss_waitms_long);
             }
             break;
         case M_NTM_8:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_8), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_8), ss_waitms_long);
             }
             break;
         case M_NTM_9:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_9), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_9), ss_waitms_long);
             }
             break;
         case M_NTM_0:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_0), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_0), ss_waitms_long);
             }
             break;
         case M_NTM_CLEFT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_LEFT)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_LEFT)), ss_waitms_long);
             }
             break;
         case M_NTM_CDOWN:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_DOWN)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_DOWN)), ss_waitms_long);
             }
             break;
         case M_NTM_CUP:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_UP)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_UP)), ss_waitms_long);
             }
             break;
         case M_NTM_CRIGHT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_RIGHT)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_RIGHT)), ss_waitms_long);
             }
             break;
         case M_NTM_P:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_P), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_P), ss_waitms_long);
             }
             break;
         case M_NTM_LEFT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LEFT), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LEFT), ss_waitms_long);
             }
             break;
         case M_NTM_DOWN:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_DOWN), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_DOWN), ss_waitms_long);
             }
             break;
         case M_NTM_UP:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_UP), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_UP), ss_waitms_long);
             }
             break;
         case M_NTM_RIGHT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_RIGHT), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_RIGHT), ss_waitms_long);
             }
             break;
         case M_NTM_COLON:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SCOLON)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SCOLON)), ss_waitms_long);
             }
             break;
         case M_NTM_N:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_N), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_N), ss_waitms_long);
             }
             break;
         case M_NTM_SPC:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_SPACE), send_string_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_SPACE), ss_waitms_long);
             }
             break;
         case M_PARENS:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LSFT(SS_TAP(X_8)) SS_LSFT(SS_TAP(X_9)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LSFT(SS_TAP(X_8)) SS_LSFT(SS_TAP(X_9)), ss_waitms);
             }
             break;
         case M_MGC_R:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_R)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_R)), ss_waitms);
             }
             break;
         case M_MGC_E:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_E)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_E)), ss_waitms);
             }
             break;
         case M_MGC_I:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_I)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_I)), ss_waitms);
             }
             break;
         case M_MGC_S:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_S)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_S)), ss_waitms);
             }
             break;
         case M_MGC_U:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_U)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_U)), ss_waitms);
             }
             break;
         case M_MGC_B:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_B)), send_string_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_B)), ss_waitms);
             }
             break;
         case RGB_SLD:
