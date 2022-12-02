@@ -331,11 +331,11 @@ void matrix_scan_user(void) {
         SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms); }
         SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING_DELAY("tmux a " SS_LSFT("\\\\") " tmux\n", ss_waitms_long); }
         SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING_DELAY("sudo -i\n", ss_waitms_long); }
-        SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING_DELAY("ps -aefH", ss_waitms_long); }
-        SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING_DELAY("ps -aefH " SS_LSFT("\\\\") " less\n", ss_waitms_long); }
+        SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING_DELAY("ps -aef" SS_LSFT("h") " ", ss_waitms_long); }
+        SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING_DELAY("ps -aef" SS_LSFT("h") " " SS_LSFT("\\\\") " less\n", ss_waitms_long); }
 
         SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING_DELAY("tai64nlocal", ss_waitms_long); }
-        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING_DELAY("tail -F  " SS_LSFT("\\")  " tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT), ss_waitms_long); }
+        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING_DELAY("tail -" SS_LSFT("f") "  " SS_LSFT("\\")  " tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT), ss_waitms_long); }
 
         SEQ_TWO_KEYS(KC_O, KC_S) { SEND_STRING_DELAY("source /opt/SGraph/scripts/oozie-env.sh\n", ss_waitms_long); }
         SEQ_THREE_KEYS(KC_O, KC_J, KC_I) { SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms_long); }
