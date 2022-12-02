@@ -298,7 +298,7 @@ int      ss_waitms                 = 35;
 int      ss_waitms_long            = 50;
 
 
-uint16_t get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_TAB):
         case LSFT_T(KC_BACKSPACE):
@@ -431,7 +431,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_TM_LBRKT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LBRACKET), ss_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LEFT_BRACKET), ss_waitms);
             }
             break;
         case M_TM_D:
@@ -521,7 +521,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_TM_COLON:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SCOLON)), ss_waitms);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SEMICOLON)), ss_waitms);
             }
             break;
         case M_TM_N:
@@ -581,7 +581,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_NTM_LBRKT:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LBRACKET), ss_waitms_long);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_TAP(X_LEFT_BRACKET), ss_waitms_long);
             }
             break;
         case M_NTM_D:
@@ -671,7 +671,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_NTM_COLON:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SCOLON)), ss_waitms_long);
+                SEND_STRING_DELAY(SS_LCTL(SS_TAP(X_B)) SS_LCTL(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_SEMICOLON)), ss_waitms_long);
             }
             break;
         case M_NTM_N:
@@ -691,32 +691,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_MGC_R:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_R)), ss_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSTEM_REQUEST) SS_DELAY(100) SS_TAP(X_R)), ss_waitms);
             }
             break;
         case M_MGC_E:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_E)), ss_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSTEM_REQUEST) SS_DELAY(100) SS_TAP(X_E)), ss_waitms);
             }
             break;
         case M_MGC_I:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_I)), ss_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSTEM_REQUEST) SS_DELAY(100) SS_TAP(X_I)), ss_waitms);
             }
             break;
         case M_MGC_S:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_S)), ss_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSTEM_REQUEST) SS_DELAY(100) SS_TAP(X_S)), ss_waitms);
             }
             break;
         case M_MGC_U:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_U)), ss_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSTEM_REQUEST) SS_DELAY(100) SS_TAP(X_U)), ss_waitms);
             }
             break;
         case M_MGC_B:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSREQ) SS_DELAY(100) SS_TAP(X_B)), ss_waitms);
+                SEND_STRING_DELAY(SS_LALT(SS_TAP(X_SYSTEM_REQUEST) SS_DELAY(100) SS_TAP(X_B)), ss_waitms);
             }
             break;
         case RGB_SLD:
@@ -730,14 +730,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 extern rgb_config_t rgb_matrix_config;
 
-const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
+const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [L_NUMPAD] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {15, 97, 236}, {27, 126, 255}, {27, 126, 255}, {254, 198, 190}, {254, 198, 190}, {15, 176, 169}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {146, 224, 255}, {169, 120, 255}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {254, 198, 190}, {233, 218, 217}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {254, 198, 190}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {254, 198, 190}, {205, 255, 255}, {0, 0, 0}, {0, 0, 0}},
     [L_SYS] = {{0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245},
            {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}},
 };
 
 void set_layer_color(int layer) {
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
+    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
         HSV hsv = {
             .h = pgm_read_byte(&ledmap[layer][i][0]),
             .s = pgm_read_byte(&ledmap[layer][i][1]),
@@ -755,10 +755,11 @@ void set_layer_color(int layer) {
 
 void keyboard_post_init_user(void) { rgb_matrix_enable(); }
 
-void rgb_matrix_indicators_user(void) {
+bool rgb_matrix_indicators_user(void) {
     if (keyboard_config.disable_layer_led) {
-        return;
+        return false;
     }
+
     switch (biton32(layer_state)) {
         case L_NUMPAD:
             set_layer_color(L_NUMPAD);
@@ -770,6 +771,8 @@ void rgb_matrix_indicators_user(void) {
             if (rgb_matrix_get_flags() == LED_FLAG_NONE) rgb_matrix_set_color_all(0, 0, 0);
             break;
     }
+
+    return false;
 }
 
 typedef struct {
