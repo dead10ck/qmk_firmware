@@ -71,6 +71,14 @@ void send_string_with_delay(const char *string, uint8_t interval);
 void send_char(char ascii_code);
 
 /**
+ * \brief Type out an ASCII character, with a delay between any modifiers.
+ *
+ * \param ascii_code The character to type.
+ * \param interval The amount of time, in milliseconds, to wait in between key presses.
+ */
+void send_char_with_delay(char ascii_code, uint8_t interval);
+
+/**
  * \brief Type out an eight digit (unsigned 32-bit) hexadecimal value.
  *
  * The format is `[0-9a-f]{8}`, eg. `00000000` through `ffffffff`.
