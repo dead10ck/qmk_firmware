@@ -147,7 +147,7 @@ __attribute__((weak)) const uint8_t ascii_to_keycode_lut[128] PROGMEM = {
 #define PGM_LOADBIT(mem, pos) ((pgm_read_byte(&((mem)[(pos) / 8])) >> ((pos) % 8)) & 0x01)
 
 void send_string(const char *string) {
-    send_string_with_delay(string, 0);
+    send_string_with_delay(string, TAP_CODE_DELAY);
 }
 
 void send_string_with_delay(const char *string, uint8_t interval) {
@@ -193,7 +193,7 @@ void send_string_with_delay(const char *string, uint8_t interval) {
 }
 
 void send_char(char ascii_code) {
-    send_char_with_delay(ascii_code, 0);
+    send_char_with_delay(ascii_code, TAP_CODE_DELAY);
 }
 
 void send_char_with_delay(char ascii_code, uint8_t interval) {
