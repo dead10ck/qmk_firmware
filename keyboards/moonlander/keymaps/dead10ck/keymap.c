@@ -329,6 +329,13 @@ void matrix_scan_user(void) {
         SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING_DELAY("ls -alh\n", ss_waitms); }
         SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms); }
         SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING_DELAY("tmux a || tmux\n", ss_waitms); }
+
+        // disable bracketed paste
+        SEQ_TWO_KEYS(KC_B, KC_P) { SEND_STRING_DELAY("printf \"\\e[?2004l\"\n", ss_waitms); }
+
+        // enable bracketed paste
+        SEQ_THREE_KEYS(KC_B, KC_P, KC_P) { SEND_STRING_DELAY("printf \"\\e[?2004h\"\n", ss_waitms); }
+
         SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING_DELAY("sudo -i\n", ss_waitms); }
         SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING_DELAY("ps -aefH", ss_waitms); }
         SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING_DELAY("ps -aefH | less\n", ss_waitms); }
