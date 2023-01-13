@@ -347,7 +347,7 @@ void matrix_scan_user(void) {
         SEQ_THREE_KEYS(KC_O, KC_J, KC_I) { SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms); }
         SEQ_THREE_KEYS(KC_O, KC_J, KC_S) { SEND_STRING_DELAY("oozie jobs -jobtype ", ss_waitms); }
 
-        SEQ_THREE_KEYS(KC_J, KC_Q, KC_C) { SEND_STRING_DELAY("jq -C '.' | less -R", ss_waitms); }
+        SEQ_THREE_KEYS(KC_J, KC_Q, KC_L) { SEND_STRING_DELAY("jq -C '.' | less -R", ss_waitms); }
         SEQ_TWO_KEYS(KC_E, KC_M) { SEND_STRING_DELAY("skyler@dead10ck.com", ss_waitms); }
 
         leader_end();
