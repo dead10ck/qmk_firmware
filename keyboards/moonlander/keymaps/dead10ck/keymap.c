@@ -350,7 +350,7 @@ void matrix_scan_user(void) {
         SEQ_TWO_KEYS(KC_Y, KC_L) { SEND_STRING_DELAY("yarn logs -applicationId '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms); }
 
         SEQ_THREE_KEYS(KC_J, KC_Q, KC_L) { SEND_STRING_DELAY("jq -C '.' | less -R\n", ss_waitms); }
-        SEQ_TWO_KEYS(KC_E, KC_M) { SEND_STRING_DELAY("skyler@dead10ck.com", ss_waitms); }
+        SEQ_TWO_KEYS(KC_E, KC_M) { SEND_STRING_DELAY("skyler@dead10ck.dev", ss_waitms); }
 
         leader_end();
     }
