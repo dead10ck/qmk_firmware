@@ -9,7 +9,7 @@
 #define CALT(kc) LALT(LCTL(kc))
 
 enum custom_keycodes {
-    M_ALT_GRAVE = ML_SAFE_RANGE,
+    M_ALT_GRAVE = SAFE_RANGE,
     M_ALT_TAB,
     M_CTRL_TAB,
     M_MGC_B,
@@ -108,9 +108,9 @@ enum combos {
 };
 
 // necessary to tell it how many combos there are
-uint16_t COMBO_LEN = C_LENGTH;
-const uint16_t PROGMEM c_nested_tmux_layer[] = { OSL(L_TMUX), OSL(L_NAV), COMBO_END };
-const uint16_t PROGMEM c_right_alt[] = { OSL(L_SYMB), KC_LEFT_GUI, COMBO_END };
+uint16_t               COMBO_LEN             = C_LENGTH;
+const uint16_t PROGMEM c_nested_tmux_layer[] = {OSL(L_TMUX), OSL(L_NAV), COMBO_END};
+const uint16_t PROGMEM c_right_alt[]         = {OSL(L_SYMB), KC_LEFT_GUI, COMBO_END};
 
 combo_t key_combos[] = {
     [C_L_N_TMUX] = COMBO(c_nested_tmux_layer, OSL(L_N_TMUX)),
@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       LT(L_SYMB,KC_ESC),  KC_A,          KC_S,        KC_D,    KC_F,       KC_G,      MT_HYP_EQ,     TG(L_NAV),    KC_H,     KC_J,     KC_K,       KC_L,     KC_SEMICOLON,   KC_QUOTE,
     //|______________|______________|______________|________|________|______________|___________| |_____________|_________|________|__________|_____________|_____________|_____________|
     //|              |              |              |        |        |              |                           |         |        |          |             |             |             |
-       KC_LEFT_SHIFT,  LCTL_T(KC_Z),  LSFT_T(KC_X),   KC_C,    KC_V,       KC_B,                                   KC_N,     KC_M,   KC_COMMA,    KC_DOT,       KC_SLASH,    KC_LEAD,
+       KC_LEFT_SHIFT,  LCTL_T(KC_Z),  LSFT_T(KC_X),   KC_C,    KC_V,       KC_B,                                   KC_N,     KC_M,   KC_COMMA,    KC_DOT,       KC_SLASH,    QK_LEAD,
     //|______________|______________|______________|________|________|______________|                           |_________|________|__________|_____________|_____________|_____________|
     //|              |              |              |        |        |              |                           |         |        |          |             |             |             |
          TD(D_SYS),     TD(D_CAPS),  KC_LEFT_GUI,OSL(L_TMUX),OSL(L_NAV),LALT(KC_TAB),                        TG(L_NUMPAD),OSL(L_SYMB),KC_LEFT_GUI,TD(D_WKSP_L),TD(D_WKSP_R), MO(L_MEDIA),
@@ -186,13 +186,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [L_MEDIA] = LAYOUT_moonlander(
     // _________________________________________________________________________________________________________________________________________________________________________________
     //|              |              |              |        |        |              |           | |             |         |        |          |             |             |             |
-           AU_TOG,        _______,       _______,   _______, _______,    _______,      _______,       _______,    _______, _______,  _______,     _______,      _______,      _______,
+           AU_TOGG,       _______,       _______,   _______, _______,    _______,      _______,       _______,    _______, _______,  _______,     _______,      _______,      _______,
     //|______________|______________|______________|________|________|______________|___________| |_____________|_________|________|__________|_____________|_____________|_____________|
     //|              |              |              |        |        |              |           | |             |         |        |          |             |             |             |
-           MU_TOG,        _______,       _______,   _______, _______,    _______,      _______,     TO(L_BASE),   _______, _______,  _______,     _______,      _______,      _______,
+           MU_TOGG,       _______,       _______,   _______, _______,    _______,      _______,     TO(L_BASE),   _______, _______,  _______,     _______,      _______,      _______,
     //|______________|______________|______________|________|________|______________|___________| |_____________|_________|________|__________|_____________|_____________|_____________|
     //|              |              |              |        |        |              |           | |             |         |        |          |             |             |             |
-           MU_MOD,        _______,       _______,   _______, _______,    _______,      _______,       _______,    _______, _______,  _______,     _______,      _______,      _______,
+           MI_MOD,        _______,       _______,   _______, _______,    _______,      _______,       _______,    _______, _______,  _______,     _______,      _______,      _______,
     //|______________|______________|______________|________|________|______________|___________| |_____________|_________|________|__________|_____________|_____________|_____________|
     //|              |              |              |        |        |              |                           |         |        |          |             |             |             |
            _______,       _______,       _______,   _______, _______,    _______,                                 _______, KC_MPLY,  KC_MPRV,     KC_MNXT,     _______,      _______,
@@ -296,7 +296,6 @@ uint16_t sticky_mod_timer          = 0;
 bool     active_sticky_mod_pressed = false;
 int      ss_waitms                 = 20;
 
-
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_TAB):
@@ -306,8 +305,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 }
-
-LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
     if (active_sticky_mod && timer_elapsed(sticky_mod_timer) > ACTIVE_STICKY_MOD_TIMEOUT) {
@@ -319,40 +316,77 @@ void matrix_scan_user(void) {
             active_sticky_mod = 0;
         }
     }
-    
-    LEADER_DICTIONARY() {
-        leading = false;
-        SEQ_TWO_KEYS(KC_C, KC_B) { SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP), ss_waitms); }
-        SEQ_FOUR_KEYS(KC_C, KC_B, KC_P, KC_P) { SEND_STRING_DELAY(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms); }
-        SEQ_THREE_KEYS(KC_C, KC_B, KC_P) { SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms); }
+}
 
-        SEQ_THREE_KEYS(KC_L, KC_S, KC_L) { SEND_STRING_DELAY("ls -alh\n", ss_waitms); }
-        SEQ_THREE_KEYS(KC_A, KC_L, KC_S) { SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms); }
-        SEQ_TWO_KEYS(KC_T, KC_M) { SEND_STRING_DELAY("tmux a || tmux\n", ss_waitms); }
+void leader_end_user(void) {
+    if (leader_sequence_two_keys(KC_C, KC_B)) {
+        SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP), ss_waitms);
 
-        // disable bracketed paste
-        SEQ_TWO_KEYS(KC_B, KC_P) { SEND_STRING_DELAY("printf \"\\e[?2004l\"\n", ss_waitms); }
+    } else if (leader_sequence_four_keys(KC_C, KC_B, KC_P, KC_P)) {
+        SEND_STRING_DELAY(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms);
 
-        // enable bracketed paste
-        SEQ_THREE_KEYS(KC_B, KC_P, KC_P) { SEND_STRING_DELAY("printf \"\\e[?2004h\"\n", ss_waitms); }
+    } else if (leader_sequence_three_keys(KC_C, KC_B, KC_P)) {
+        SEND_STRING_DELAY("```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms);
+    }
 
-        SEQ_TWO_KEYS(KC_S, KC_U) { SEND_STRING_DELAY("sudo -i\n", ss_waitms); }
-        SEQ_TWO_KEYS(KC_P, KC_S) { SEND_STRING_DELAY("ps -aefH", ss_waitms); }
-        SEQ_THREE_KEYS(KC_P, KC_S, KC_L) { SEND_STRING_DELAY("ps -aefH | less\n", ss_waitms); }
+    else if (leader_sequence_three_keys(KC_L, KC_S, KC_L)) {
+        SEND_STRING_DELAY("ls -alh\n", ss_waitms);
 
-        SEQ_THREE_KEYS(KC_T, KC_A, KC_I) { SEND_STRING_DELAY("tai64nlocal", ss_waitms); }
-        SEQ_TWO_KEYS(KC_T, KC_A) { SEND_STRING_DELAY("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT), ss_waitms); }
-        SEQ_TWO_KEYS(KC_P, KC_U) { SEND_STRING_DELAY("/etc/puppet/bin/puppet" , ss_waitms); }
+    } else if (leader_sequence_three_keys(KC_A, KC_L, KC_S)) {
+        SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms);
 
-        SEQ_TWO_KEYS(KC_O, KC_S) { SEND_STRING_DELAY("source /opt/SGraph/scripts/oozie-env.sh\n", ss_waitms); }
-        SEQ_THREE_KEYS(KC_O, KC_J, KC_I) { SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms); }
-        SEQ_THREE_KEYS(KC_O, KC_J, KC_S) { SEND_STRING_DELAY("oozie jobs -jobtype ", ss_waitms); }
-        SEQ_TWO_KEYS(KC_Y, KC_L) { SEND_STRING_DELAY("yarn logs -applicationId '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms); }
+    } else if (leader_sequence_two_keys(KC_T, KC_M)) {
+        SEND_STRING_DELAY("tmux a || tmux\n", ss_waitms);
+    }
 
-        SEQ_THREE_KEYS(KC_J, KC_Q, KC_L) { SEND_STRING_DELAY("jq -C '.' | less -R\n", ss_waitms); }
-        SEQ_TWO_KEYS(KC_E, KC_M) { SEND_STRING_DELAY("skyler@dead10ck.dev", ss_waitms); }
+    // disable bracketed paste
+    else if (leader_sequence_two_keys(KC_B, KC_P)) {
+        SEND_STRING_DELAY("printf \"\\e[?2004l\"\n", ss_waitms);
+    }
 
-        leader_end();
+    // enable bracketed paste
+    else if (leader_sequence_three_keys(KC_B, KC_P, KC_P)) {
+        SEND_STRING_DELAY("printf \"\\e[?2004h\"\n", ss_waitms);
+    }
+
+    else if (leader_sequence_two_keys(KC_S, KC_U)) {
+        SEND_STRING_DELAY("sudo -i\n", ss_waitms);
+
+    } else if (leader_sequence_two_keys(KC_P, KC_S)) {
+        SEND_STRING_DELAY("ps -aefH", ss_waitms);
+
+    } else if (leader_sequence_three_keys(KC_P, KC_S, KC_L)) {
+        SEND_STRING_DELAY("ps -aefH | less\n", ss_waitms);
+    }
+
+    else if (leader_sequence_three_keys(KC_T, KC_A, KC_I)) {
+        SEND_STRING_DELAY("tai64nlocal", ss_waitms);
+
+    } else if (leader_sequence_two_keys(KC_T, KC_A)) {
+        SEND_STRING_DELAY("tail -F  | tai64nlocal" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT), ss_waitms);
+
+    } else if (leader_sequence_two_keys(KC_P, KC_U)) {
+        SEND_STRING_DELAY("/etc/puppet/bin/puppet", ss_waitms);
+    }
+
+    else if (leader_sequence_two_keys(KC_O, KC_S)) {
+        SEND_STRING_DELAY("source /opt/SGraph/scripts/oozie-env.sh\n", ss_waitms);
+
+    } else if (leader_sequence_three_keys(KC_O, KC_J, KC_I)) {
+        SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms);
+
+    } else if (leader_sequence_three_keys(KC_O, KC_J, KC_S)) {
+        SEND_STRING_DELAY("oozie jobs -jobtype ", ss_waitms);
+
+    } else if (leader_sequence_two_keys(KC_Y, KC_L)) {
+        SEND_STRING_DELAY("yarn logs -applicationId '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms);
+    }
+
+    else if (leader_sequence_three_keys(KC_J, KC_Q, KC_L)) {
+        SEND_STRING_DELAY("jq -C '.' | less -R\n", ss_waitms);
+
+    } else if (leader_sequence_two_keys(KC_E, KC_M)) {
+        SEND_STRING_DELAY("skyler@dead10ck.dev", ss_waitms);
     }
 }
 
@@ -743,8 +777,8 @@ extern rgb_config_t rgb_matrix_config;
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [L_NUMPAD] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {15, 97, 236}, {27, 126, 255}, {27, 126, 255}, {254, 198, 190}, {254, 198, 190}, {15, 176, 169}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {146, 224, 255}, {169, 120, 255}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {254, 198, 190}, {233, 218, 217}, {250, 159, 255}, {250, 159, 255}, {250, 159, 255}, {254, 198, 190}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {254, 198, 190}, {205, 255, 255}, {0, 0, 0}, {0, 0, 0}},
-    [L_SYS] = {{0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245},
-           {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}},
+    [L_SYS]    = {{0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245},
+                  {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}, {0, 172, 245}},
 };
 
 void set_layer_color(int layer) {
@@ -764,7 +798,9 @@ void set_layer_color(int layer) {
     }
 }
 
-void keyboard_post_init_user(void) { rgb_matrix_enable(); }
+void keyboard_post_init_user(void) {
+    rgb_matrix_enable();
+}
 
 bool rgb_matrix_indicators_user(void) {
     if (keyboard_config.disable_layer_led) {
