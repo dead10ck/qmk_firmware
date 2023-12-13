@@ -20,8 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-//#define USE_MATRIX_I2C
-#define MASTER_LEFT
+// set each half of the keyboard with EEPROM memory with:
+//
+// qmk flash -bl avrdude-split-left
+// qmk flash -bl avrdude-split-right
+#define EE_HANDS
 
 #define ONESHOT_TAP_TOGGLE 2
 
@@ -30,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_TOGGLE 2
 #define TAPPING_TERM 150
+#define COMBO_TERM 100
 
 #define LEADER_TIMEOUT 300
 #define LEADER_PER_KEY_TIMING

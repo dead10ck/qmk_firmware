@@ -36,9 +36,20 @@ enum custom_keycodes {
     M_MGC_R,
     M_MGC_S,
     M_MGC_U,
-    K_TMUX,
-    K_NTMUX,
     RGB_SLD,
+
+    // for these to work, the low order bits must be 0 so we can mask
+    // another keycode into it; but the range of custom user keys is
+    // only:
+    //
+    // QK_USER                        = 0x7E40,
+    // QK_USER_MAX                    = 0x7FFF,
+    //
+    // so the only value that can do this is this one
+    K_TMUX     = 0x7F00,
+
+    // FIXME
+    K_NTMUX    = 0x7F01,
 };
 
 enum tap_dance_codes {
@@ -71,18 +82,18 @@ enum combos {
 
 // necessary to tell it how many combos there are
 const uint16_t         COMBO_LEN               = C_LENGTH;
-const uint16_t PROGMEM c_layer_tmux_left[]     = {KC_R, KC_T, COMBO_END};
-const uint16_t PROGMEM c_layer_tmux_right[]    = {KC_Y, KC_U, COMBO_END};
-const uint16_t PROGMEM c_layer_ntmux_left[]    = {KC_E, KC_R, KC_T, COMBO_END};
-const uint16_t PROGMEM c_layer_ntmux_right[]   = {KC_Y, KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM c_numpad[]              = {KC_F, KC_G, COMBO_END};
+const uint16_t PROGMEM c_layer_tmux_left[]     = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM c_layer_tmux_right[]    = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM c_layer_ntmux_left[]    = {KC_R, KC_E, KC_W, COMBO_END};
+const uint16_t PROGMEM c_layer_ntmux_right[]   = {KC_U, KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM c_numpad[]              = {KC_D, KC_F, COMBO_END};
 
 combo_t key_combos[] = {
-    [C_L_TMUX_L]   = COMBO(c_layer_tmux_left, TT(L_TMUX)),
-    [C_L_TMUX_R]   = COMBO(c_layer_tmux_right, TT(L_TMUX)),
-    [C_L_N_TMUX_L] = COMBO(c_layer_ntmux_left, TT(L_N_TMUX)),
+    [C_L_TMUX_L]   = COMBO(c_layer_tmux_left,   TT(L_TMUX)),
+    [C_L_TMUX_R]   = COMBO(c_layer_tmux_right,  TT(L_TMUX)),
+    [C_L_N_TMUX_L] = COMBO(c_layer_ntmux_left,  TT(L_N_TMUX)),
     [C_L_N_TMUX_R] = COMBO(c_layer_ntmux_right, TT(L_N_TMUX)),
-    [C_L_NUMPAD]   = COMBO(c_layer_ntmux_right, TT(L_NUMPAD)),
+    [C_L_NUMPAD]   = COMBO(c_numpad,            TT(L_NUMPAD)),
 };
 
 // clang-format off
@@ -99,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LEFT_GUI,       KC_Z,          KC_X,         KC_C,         KC_V,         KC_B,                                                  KC_N,         KC_M,       KC_COMM,     KC_DOT,      KC_SLSH,   LT(L_MEDIA, QK_LEAD),
   //|______________|______________|______________|_____________|_____________|_____________|_________________     __________________|_____________|____________|____________|____________|____________|___________|
   //                                                       |              |                |                 |   |                  |                      |                |
-                                                              TT(L_NAV),   LSFT_T(KC_TAB), LCTL_T(KC_ENTER),      LCTL_T(KC_SPACE),  LSFT_T(KC_BACKSPACE),   KC_LEFT_ALT
+                                                              TT(L_NAV),   LCTL_T(KC_ENTER), LSFT_T(KC_TAB),      LSFT_T(KC_BACKSPACE),  LCTL_T(KC_SPACE),   KC_LEFT_ALT
   //                                                       |______________|________________|_________________|   |__________________|______________________|________________|
   ),
 
@@ -122,16 +133,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_SYMB] = LAYOUT_split_3x6_3(
   // _______________________________________________________________________________________                                         _____________________________________________________________________________
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,        _______,      _______,       KC_LCBR,     KC_RCBR,      _______,                                                KC_GRAVE,     KC_EXLM,      KC_AT,      KC_CIRC,    _______,     _______,
+        _______,        _______,      _______,       KC_LCBR,     KC_RCBR,      KC_EQUAL,                                               KC_GRAVE,     KC_EXLM,      KC_AT,      KC_BSLS,    KC_CIRC,     _______,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,        _______,      _______,       KC_LPRN,     KC_RPRN,      KC_TILD,                                                KC_PERC,      KC_AMPR,     KC_PIPE,     KC_DLR,     _______,     _______,
+        _______,        _______,      _______,       KC_LPRN,     KC_RPRN,      KC_TILD,                                                KC_PERC,      KC_AMPR,     KC_PIPE,     KC_MINUS,   KC_DLR,      _______,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,        _______,      _______,       KC_LBRC,     KC_RBRC,      _______,                                                KC_HASH,      KC_ASTR,     _______,     _______,    _______,     _______,
+        _______,        _______,      _______,       KC_LBRC,     KC_RBRC,      KC_PLUS,                                                KC_HASH,      KC_ASTR,     _______,     _______,    _______,     _______,
   //|______________|______________|______________|_____________|_____________|_____________|_________________     __________________|_____________|____________|____________|____________|____________|___________|
   //                                                       |              |                |                 |   |                  |                      |                |
-                                                              M_ALT_TAB,      M_ALT_GRAVE,     M_CTRL_TAB,             _______,             _______,             _______
+                                                             M_ALT_GRAVE,     M_ALT_TAB,       M_CTRL_TAB,             _______,             _______,             _______
   //                                                       |______________|________________|_________________|   |__________________|______________________|________________|
   ),
 
