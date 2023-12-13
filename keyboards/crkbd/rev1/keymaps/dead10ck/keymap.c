@@ -369,6 +369,15 @@ void leader_end_user(void) {
     }
 }
 
+// must hold all combos to fire
+bool get_combo_must_hold(uint16_t index, combo_t *combo) {
+    return true;
+}
+
+bool get_combo_must_tap(uint16_t index, combo_t *combo) {
+    return false;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uint16_t high_code = (keycode & 0xFF00);
 
