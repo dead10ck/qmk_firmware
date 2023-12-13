@@ -33,7 +33,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_TOGGLE 2
 #define TAPPING_TERM 150
-#define COMBO_TERM 100
+
+#define COMBO_TERM 80
+#define COMBO_HOLD_TERM 150
+#define COMBO_MUST_HOLD_PER_COMBO
+#define COMBO_MUST_TAP_PER_COMBO
 
 #define LEADER_TIMEOUT 300
 #define LEADER_PER_KEY_TIMING
