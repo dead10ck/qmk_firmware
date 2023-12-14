@@ -45,11 +45,12 @@ enum custom_keycodes {
     // QK_USER                        = 0x7E40,
     // QK_USER_MAX                    = 0x7FFF,
     //
-    // so the only value that can do this is this one
+    // so the only value that can do in the safe range this is this one
     K_TMUX     = 0x7F00,
 
-    // FIXME
-    K_NTMUX    = 0x7F01,
+    // this corresponds to this key, which we don't care about
+    // QK_JOYSTICK_BUTTON_0 = 0x7400,
+    K_NTMUX    = 0x7400,
 };
 
 enum tap_dance_codes {
