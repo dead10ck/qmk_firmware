@@ -77,6 +77,8 @@ enum combos {
     C_L_TMUX_R,
     C_L_N_TMUX_R,
     C_L_NUMPAD,
+    C_HYPER_L,
+    C_HYPER_R,
     C_LENGTH,
 };
 
@@ -86,6 +88,8 @@ const uint16_t PROGMEM c_layer_tmux_left[]     = {KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM c_layer_tmux_right[]    = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM c_layer_ntmux_left[]    = {KC_R, KC_E, KC_W, COMBO_END};
 const uint16_t PROGMEM c_layer_ntmux_right[]   = {KC_U, KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM c_hyper_left[]          = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM c_hyper_right[]         = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM c_numpad[]              = {KC_D, KC_F, COMBO_END};
 
 combo_t key_combos[] = {
@@ -94,6 +98,8 @@ combo_t key_combos[] = {
     [C_L_N_TMUX_L] = COMBO(c_layer_ntmux_left,  TT(L_N_TMUX)),
     [C_L_N_TMUX_R] = COMBO(c_layer_ntmux_right, TT(L_N_TMUX)),
     [C_L_NUMPAD]   = COMBO(c_numpad,            TT(L_NUMPAD)),
+    [C_HYPER_L]    = COMBO(c_hyper_left,        KC_HYPR),
+    [C_HYPER_R]    = COMBO(c_hyper_right,       KC_HYPR),
 };
 
 // clang-format off
@@ -101,13 +107,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_BASE] = LAYOUT_split_3x6_3(
   // _______________________________________________________________________________________                                         _____________________________________________________________________________
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-       TT(L_SYS),        KC_Q,          KC_W,         KC_E,         KC_R,         KC_T,                                                  KC_Y,         KC_U,        KC_I,        KC_O,        KC_P,      KC_MINUS,
+       TT(L_SYS),        KC_Q,          KC_W,         KC_E,         KC_R,         KC_T,                                                  KC_Y,         KC_U,        KC_I,        KC_O,        KC_P,     KC_MINUS,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
- LT(L_SYMB, KC_ESC),     KC_A,          KC_S,         KC_D,         KC_F,         KC_G,                                                  KC_H,         KC_J,        KC_K,        KC_L,       KC_SCLN,    KC_QUOT,
+ LT(L_SYMB, KC_ESC),     KC_A,          KC_S,         KC_D,         KC_F,         KC_G,                                                  KC_H,         KC_J,        KC_K,        KC_L,       KC_SCLN,  LT(L_MEDIA, KC_QUOT),
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-      KC_LEFT_GUI,       KC_Z,          KC_X,         KC_C,         KC_V,         KC_B,                                                  KC_N,         KC_M,       KC_COMM,     KC_DOT,      KC_SLSH,   LT(L_MEDIA, QK_LEAD),
+      KC_LEFT_GUI,       KC_Z,          KC_X,         KC_C,         KC_V,         KC_B,                                                  KC_N,         KC_M,       KC_COMM,     KC_DOT,      KC_SLSH,    QK_LEAD,
   //|______________|______________|______________|_____________|_____________|_____________|_________________     __________________|_____________|____________|____________|____________|____________|___________|
   //                                                       |              |                |                 |   |                  |                      |                |
                                                               TT(L_NAV),   LCTL_T(KC_ENTER), LSFT_T(KC_TAB),      LSFT_T(KC_BACKSPACE),  LCTL_T(KC_SPACE),   KC_LEFT_ALT
@@ -152,10 +158,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,        _______,      _______,       _______,      _______,      _______,                                               _______,      _______,     _______,     _______,     _______,    _______,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,        _______,      _______,       _______,      _______,      _______,                                             TO(L_BASE),     KC_MPLY,    KC_MPRV,     KC_MNXT,      _______,    _______,
+        _______,        _______,      _______,       RGB_MOD,      RGB_RMOD,     _______,                                              TO(L_BASE),     KC_MPLY,    KC_MPRV,     KC_MNXT,     _______,    _______,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,        _______,      _______,       _______,      RGB_SPD,      RGB_SPI,                                               _______,      KC_VOLD,    KC_VOLU,  KC_AUDIO_MUTE, HYPER(KC_M),  _______,
+        _______,        _______,      _______,       RGB_SPD,      RGB_SPI,      _______,                                               _______,      KC_VOLD,    KC_VOLU,  KC_AUDIO_MUTE, HYPER(KC_M),  _______,
   //|______________|______________|______________|_____________|_____________|_____________|_________________     __________________|_____________|____________|____________|____________|____________|___________|
   //                                                       |              |                |                 |   |                  |                      |                |
                                                                RGB_VAD,        RGB_VAI,          _______,              _______,              RGB_HUD,            RGB_HUI
