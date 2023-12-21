@@ -313,6 +313,10 @@ void leader_end_user(void) {
     } else if (leader_sequence_two_keys(KC_C, KC_A)) {
         SEND_STRING_DELAY("cd /var/lib/actions", ss_waitms);
 
+    // [NOTE] the enter key has to be the full mod-tap keycode that's on the base layer
+    } else if (leader_sequence_three_keys(KC_C, KC_A, LCTL_T(KC_ENTER))) {
+        SEND_STRING_DELAY("cd /var/lib/actions\n", ss_waitms);
+
     } else if (leader_sequence_four_keys(KC_C, KC_B, KC_P, KC_P)) {
         SEND_STRING_DELAY(SS_LSFT("\n\n") "```" SS_LSFT("\n\n") "```" SS_TAP(X_UP) SS_LCTL(SS_TAP(X_V)), ss_waitms);
 
@@ -322,6 +326,9 @@ void leader_end_user(void) {
 
     else if (leader_sequence_three_keys(KC_L, KC_S, KC_L)) {
         SEND_STRING_DELAY("ls -alh", ss_waitms);
+
+    } else if (leader_sequence_four_keys(KC_L, KC_S, KC_L, LCTL_T(KC_ENTER))) {
+        SEND_STRING_DELAY("ls -alh\n", ss_waitms);
 
     } else if (leader_sequence_three_keys(KC_A, KC_L, KC_S)) {
         SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms);
