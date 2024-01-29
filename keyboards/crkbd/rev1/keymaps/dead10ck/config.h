@@ -45,9 +45,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-#define RGB_DISABLE_WHEN_USB_SUSPENDED
-
 #ifdef RGBLIGHT_ENABLE
+    #define RGB_DISABLE_WHEN_USB_SUSPENDED
+    #define RGB_MATRIX_TIMEOUT 900
+
     #define RGBLIGHT_EFFECT_BREATHING
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD
     #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
