@@ -224,13 +224,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_SYS] = LAYOUT_split_3x6_3(
   // _______________________________________________________________________________________                                         _____________________________________________________________________________
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,         KC_F1,        KC_F2,         KC_F3,       _______,      _______,                                               _______,      _______,     _______,     _______,     _______,    QK_BOOT,
+        _______,        _______,      _______,       _______,      _______,      _______,                                               _______,       KC_F7,      KC_F8,        KC_F9,      _______,    QK_BOOT,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-      TO(L_BASE),       _______,      _______,   CALT(KC_DELETE),  _______,      _______,                                               M_MGC_R,      M_MGC_E,     M_MGC_I,     M_MGC_S,     M_MGC_U,    M_MGC_B,
+      TO(L_BASE),       _______,      _______,   CALT(KC_DELETE),  _______,      _______,                                               _______,       KC_F4,      KC_F5,        KC_F6,      _______,    _______,
   //|______________|______________|______________|_____________|_____________|_____________|                                        |_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |                                        |             |            |            |            |            |           |
-        _______,        _______,      _______,       _______,      _______,      _______,                                               _______,      _______,     _______,     _______,     _______,    _______,
+        M_MGC_R,       M_MGC_E,       M_MGC_I,       M_MGC_S,      M_MGC_U,      M_MGC_B,                                               _______,       KC_F1,      KC_F2,        KC_F3,      _______,    _______,
   //|______________|______________|______________|_____________|_____________|_____________|_________________     __________________|_____________|____________|____________|____________|____________|___________|
   //                                                       |              |                |                 |   |                  |                      |                |
                                                                 _______,        _______,         _______,              _______,              _______,            _______
@@ -258,7 +258,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 uint16_t active_sticky_mod         = 0;
 uint16_t sticky_mod_timer          = 0;
 bool     active_sticky_mod_pressed = false;
-int      ss_waitms                 = 20;
+int      ss_waitms                 = 50;
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -407,11 +407,12 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uint16_t high_code = (keycode & 0xFF00);
+    uint16_t tmux_kc;
 
     switch(high_code) {
         case K_TMUX:
         case K_NTMUX:
-            uint16_t kc = (keycode & 0xFF);
+            tmux_kc = (keycode & 0xFF);
 
             if (record->event.pressed) {
                 if (high_code == K_TMUX) {
@@ -420,7 +421,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING_DELAY(SS_LCTL("bb"), ss_waitms);
                 }
 
-                tap_code_delay(kc, ss_waitms);
+                tap_code_delay(tmux_kc, ss_waitms);
             }
 
             return false;
