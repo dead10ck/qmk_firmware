@@ -331,7 +331,7 @@ void leader_end_user(void) {
         SEND_STRING_DELAY("ls -alh\n", ss_waitms);
 
     } else if (leader_sequence_three_keys(KC_A, KC_L, KC_S)) {
-        SEND_STRING_DELAY("aws s3 ls --human ", ss_waitms);
+        SEND_STRING_DELAY("aws s3 ls --human s3://", ss_waitms);
 
     } else if (leader_sequence_two_keys(KC_T, KC_M)) {
         SEND_STRING_DELAY("tmux a || tmux\n", ss_waitms);
