@@ -258,7 +258,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 uint16_t active_sticky_mod         = 0;
 uint16_t sticky_mod_timer          = 0;
 bool     active_sticky_mod_pressed = false;
-int      ss_waitms                 = 50;
+int      ss_waitms                 = 20;
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
