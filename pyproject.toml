@@ -1,0 +1,14 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [ "hatchling" ]
+
+[project]
+name = "qmk_dead10ck"
+version = "1.0.0"
+
+dependencies = [
+  "qmk",
+]
+
+[tool.hatch.build.targets.wheel]
+include = ["*.py"]
