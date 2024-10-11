@@ -28,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NTMUX(kc) (K_NTMUX | ((kc)&0xFF))
 #define SNTMUX(kc) (K_S_NTMUX | ((kc)&0xFF))
 
+#define ALTSYSRQ(kc) SS_DOWN(X_LALT) SS_DOWN(X_SYSTEM_REQUEST) kc SS_UP(X_SYSTEM_REQUEST) SS_UP(X_LALT) 
+
 enum custom_keycodes {
     M_ALT_GRAVE = SAFE_RANGE,
     M_ALT_TAB,
@@ -38,6 +40,7 @@ enum custom_keycodes {
     M_MGC_R,
     M_MGC_S,
     M_MGC_U,
+    M_MGC_F,
     RGB_SLD,
 
     // for these to work, the low order bits must be 0 so we can mask
@@ -478,32 +481,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Macros
         case M_MGC_R:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_DOWN(X_SYSTEM_REQUEST) SS_TAP(X_R) SS_UP(X_SYSTEM_REQUEST)), ss_waitms);
+                SEND_STRING_DELAY(ALTSYSRQ("r"), ss_waitms);
             }
             break;
         case M_MGC_E:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_DOWN(X_SYSTEM_REQUEST) SS_TAP(X_E) SS_UP(X_SYSTEM_REQUEST)), ss_waitms);
+                SEND_STRING_DELAY(ALTSYSRQ("e"), ss_waitms);
             }
             break;
         case M_MGC_I:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_DOWN(X_SYSTEM_REQUEST) SS_TAP(X_I) SS_UP(X_SYSTEM_REQUEST)), ss_waitms);
+                SEND_STRING_DELAY(ALTSYSRQ("i"), ss_waitms);
             }
             break;
         case M_MGC_S:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_DOWN(X_SYSTEM_REQUEST) SS_TAP(X_S) SS_UP(X_SYSTEM_REQUEST)), ss_waitms);
+                SEND_STRING_DELAY(ALTSYSRQ("s"), ss_waitms);
             }
             break;
         case M_MGC_U:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_DOWN(X_SYSTEM_REQUEST) SS_TAP(X_U) SS_UP(X_SYSTEM_REQUEST)), ss_waitms);
+                SEND_STRING_DELAY(ALTSYSRQ("u"), ss_waitms);
             }
             break;
         case M_MGC_B:
             if (record->event.pressed) {
-                SEND_STRING_DELAY(SS_LALT(SS_DOWN(X_SYSTEM_REQUEST) SS_TAP(X_B) SS_UP(X_SYSTEM_REQUEST)), ss_waitms);
+                SEND_STRING_DELAY(ALTSYSRQ("b"), ss_waitms);
+            }
+            break;
+        case M_MGC_F:
+            if (record->event.pressed) {
+                SEND_STRING_DELAY(ALTSYSRQ("f"), ss_waitms);
             }
             break;
         case RGB_SLD:
