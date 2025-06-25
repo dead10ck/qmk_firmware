@@ -8,8 +8,9 @@ GRAVE_ESC_ENABLE = no
 MAGIC_ENABLE = no
 MUSIC_ENABLE = no
 AUDIO_ENABLE = no
-
-# RGBLIGHT_ENABLE = yes
 COMBO_ENABLE = yes
 TAP_DANCE_ENABLE = yes
 LEADER_ENABLE = yes
+
+# needed for the unicode keycode range to do anything
+UNICODE_ENABLE = yes

@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "keycodes.h"
 #include QMK_KEYBOARD_H
 
 #define MT_HYP_EQ MT(MOD_HYPR, KC_EQUAL)
@@ -27,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define STMUX(kc) (K_S_TMUX | ((kc)&0xFF))
 #define NTMUX(kc) (K_NTMUX | ((kc)&0xFF))
 #define SNTMUX(kc) (K_S_NTMUX | ((kc)&0xFF))
+#define CTMUX(kc) (K_C_TMUX | ((kc)&0xFF))
+#define CNTMUX(kc) (K_C_NTMUX | ((kc)&0xFF))
 
 #define ALTSYSRQ(kc) SS_DOWN(X_LALT) SS_DOWN(X_SYSTEM_REQUEST) kc SS_UP(X_SYSTEM_REQUEST) SS_UP(X_LALT)
 
@@ -57,14 +60,30 @@ enum custom_keycodes {
     // QK_JOYSTICK_BUTTON_0 = 0x7400,
     K_NTMUX    = 0x7400,
 
-    // need two more keycodes to handle shifted keys, since they require the
-    // high bits
+    // need one special keycode for any keys with mods held down, since they
+    // require the high bits
     //
     // MIDI stuff
+    //
     // QK_MIDI_ON = 0x7100,
     // QK_SEQUENCER_ON = 0x7200,
+
+    // shift
     K_S_TMUX   = 0x7100,
-    K_S_NTMUX   = 0x7200,
+    K_S_NTMUX  = 0x7200,
+
+    // keycodes for typing unicode characters are in this range:
+    //
+    // QK_UNICODEMAP                  = 0x8000,
+    // QK_UNICODEMAP_MAX              = 0xBFFF,
+    // QK_UNICODE                     = 0x8000,
+    // QK_UNICODE_MAX                 = 0xFFFF,
+    // QK_UNICODEMAP_PAIR             = 0xC000,
+    // QK_UNICODEMAP_PAIR_MAX         = 0xFFFF,
+
+    // ctrl
+    K_C_TMUX   = 0x8000,
+    K_C_NTMUX   = 0x8100,
 };
 
 enum tap_dance_codes {
@@ -190,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_TMUX] = LAYOUT_split_3x6_3_ex2(
   // ____________________________________________________________________________________________________             ______________ _____________________________________________________________________________
   //|              |              |              |             |             |             |             |           |              |             |            |            |            |            |           |
-        _______,   STMUX(KC_DQUO),STMUX(KC_PERC),STMUX(KC_ASTR),STMUX(KC_LPRN),  _______,      _______,                  _______,       _______,     _______,     _______,     _______,    TMUX(KC_P),  _______,
+        _______,   STMUX(KC_DQUO),STMUX(KC_PERC),STMUX(KC_ASTR),STMUX(KC_LPRN),  _______,      _______,                  _______,   CTMUX(KC_LEFT),CTMUX(KC_DOWN),CTMUX(KC_UP),CTMUX(KC_RIGHT),TMUX(KC_P),_______,
   //|______________|______________|______________|_____________|_____________|_____________|_____________|           |______________|_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |             |           |              |             |            |            |            |            |           |
       TO(L_BASE),       _______,   TMUX(KC_LBRC),  TMUX(KC_D),     _______,      _______,      _______,                  _______,   TMUX(KC_LEFT),TMUX(KC_DOWN),TMUX(KC_UP),TMUX(KC_RIGHT),TMUX(KC_COLON),_______,
@@ -206,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_N_TMUX] = LAYOUT_split_3x6_3_ex2(
   // ____________________________________________________________________________________________________             ______________ _____________________________________________________________________________
   //|              |              |              |             |             |             |             |           |              |             |            |            |            |            |           |
-        _______,  SNTMUX(KC_DQUO),SNTMUX(KC_PERC),SNTMUX(KC_ASTR),SNTMUX(KC_LPRN),_______,     _______,                  _______,       _______,      _______,     _______,     _______,     NTMUX(KC_P),_______,
+        _______,  SNTMUX(KC_DQUO),SNTMUX(KC_PERC),SNTMUX(KC_ASTR),SNTMUX(KC_LPRN),_______,     _______,                  _______, CNTMUX(KC_LEFT),CNTMUX(KC_DOWN),CNTMUX(KC_UP),CNTMUX(KC_RIGHT),NTMUX(KC_P),_______,
   //|______________|______________|______________|_____________|_____________|_____________|_____________|           |______________|_____________|____________|____________|____________|____________|___________|
   //|              |              |              |             |             |             |             |           |              |             |            |            |            |            |           |
       TO(L_BASE),       _______,   NTMUX(KC_LBRC), NTMUX(KC_D),    _______,      _______,      _______,                  _______,  NTMUX(KC_LEFT),NTMUX(KC_DOWN),NTMUX(KC_UP),NTMUX(KC_RIGHT),NTMUX(KC_COLON),_______,
@@ -428,24 +447,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case K_NTMUX:
         case K_S_TMUX:
         case K_S_NTMUX:
+        case K_C_TMUX:
+        case K_C_NTMUX:
             if (record->event.pressed) {
                 tmux_kc = (keycode & 0xFF);
                 bool shifted = false;
+                bool ctrl = false;
 
                 switch (high_code) {
                     case K_S_TMUX:
                     case K_S_NTMUX:
                         shifted = true;
                         break;
+                    case K_C_TMUX:
+                    case K_C_NTMUX:
+                        ctrl = true;
+                        break;
                 }
 
                 switch (high_code) {
                     case K_TMUX:
+                    case K_C_TMUX:
                     case K_S_TMUX:
                         SEND_STRING_DELAY(SS_LCTL("b"), ss_waitms);
                         break;
                     case K_NTMUX:
                     case K_S_NTMUX:
+                    case K_C_NTMUX:
                         SEND_STRING_DELAY(SS_LCTL("bb"), ss_waitms);
                         break;
                 }
@@ -455,10 +483,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     wait_ms(ss_waitms);
                 }
 
+                if (ctrl) {
+                    register_code16(KC_LEFT_CTRL);
+                    wait_ms(ss_waitms);
+                }
+
                 tap_code_delay(tmux_kc, ss_waitms);
 
                 if (shifted) {
                     unregister_code16(KC_LEFT_SHIFT);
+                    wait_ms(ss_waitms);
+                }
+
+                if (ctrl) {
+                    unregister_code16(KC_LEFT_CTRL);
+                    wait_ms(ss_waitms);
                 }
             }
 
