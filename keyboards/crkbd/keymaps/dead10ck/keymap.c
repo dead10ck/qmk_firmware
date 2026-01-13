@@ -114,6 +114,9 @@ enum combos {
     C_L_NUMPAD_TO,
     C_HYPER_L,
     C_HYPER_R,
+    C_M_LEFT_CLICK,
+    C_M_MIDDLE_CLICK,
+    C_M_RIGHT_CLICK,
     C_LENGTH,
 };
 
@@ -129,16 +132,22 @@ const uint16_t PROGMEM c_hyper_left[]          = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM c_hyper_right[]         = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM c_numpad[]              = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM c_numpad_to[]           = {KC_S, KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM c_m_left_click[]        = {KC_N, KC_M, COMBO_END};
+const uint16_t PROGMEM c_m_middle_click[]      = {KC_M, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM c_m_right_click[]       = {KC_COMMA, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
-    [C_L_TMUX_L]    = COMBO(c_layer_tmux_left,   MO(L_TMUX)),
-    [C_L_TMUX_R]    = COMBO(c_layer_tmux_right,  MO(L_TMUX)),
-    [C_L_N_TMUX_L]  = COMBO(c_layer_ntmux_left,  MO(L_N_TMUX)),
-    [C_L_N_TMUX_R]  = COMBO(c_layer_ntmux_right, MO(L_N_TMUX)),
-    [C_L_NUMPAD]    = COMBO(c_numpad,            MO(L_NUMPAD)),
-    [C_L_NUMPAD_TO] = COMBO(c_numpad_to,         TO(L_NUMPAD)),
-    [C_HYPER_L]     = COMBO(c_hyper_left,        KC_HYPR),
-    [C_HYPER_R]     = COMBO(c_hyper_right,       KC_HYPR),
+    [C_L_TMUX_L]       = COMBO(c_layer_tmux_left,   MO(L_TMUX)),
+    [C_L_TMUX_R]       = COMBO(c_layer_tmux_right,  MO(L_TMUX)),
+    [C_L_N_TMUX_L]     = COMBO(c_layer_ntmux_left,  MO(L_N_TMUX)),
+    [C_L_N_TMUX_R]     = COMBO(c_layer_ntmux_right, MO(L_N_TMUX)),
+    [C_L_NUMPAD]       = COMBO(c_numpad,            MO(L_NUMPAD)),
+    [C_L_NUMPAD_TO]    = COMBO(c_numpad_to,         TO(L_NUMPAD)),
+    [C_HYPER_L]        = COMBO(c_hyper_left,        KC_HYPR),
+    [C_HYPER_R]        = COMBO(c_hyper_right,       KC_HYPR),
+    [C_M_LEFT_CLICK]   = COMBO(c_m_left_click,      QK_MOUSE_BUTTON_1),
+    [C_M_MIDDLE_CLICK] = COMBO(c_m_middle_click,    QK_MOUSE_BUTTON_3),
+    [C_M_RIGHT_CLICK]  = COMBO(c_m_right_click,     QK_MOUSE_BUTTON_2),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
