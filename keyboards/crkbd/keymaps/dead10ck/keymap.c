@@ -417,22 +417,7 @@ void leader_end_user(void) {
 
     } else if (leader_sequence_two_keys(KC_P, KC_U)) {
         SEND_STRING_DELAY("/etc/puppet/bin/puppet", ss_waitms);
-    }
-
-    else if (leader_sequence_two_keys(KC_O, KC_S)) {
-        SEND_STRING_DELAY("source /opt/SGraph/scripts/oozie-env.sh\n", ss_waitms);
-
-    } else if (leader_sequence_three_keys(KC_O, KC_J, KC_I)) {
-        SEND_STRING_DELAY("oozie job -info '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms);
-
-    } else if (leader_sequence_three_keys(KC_O, KC_J, KC_S)) {
-        SEND_STRING_DELAY("oozie jobs -jobtype ", ss_waitms);
-
-    } else if (leader_sequence_two_keys(KC_Y, KC_L)) {
-        SEND_STRING_DELAY("yarn logs -applicationId '" SS_LSFT(SS_LCTL("v")) "'\n", ss_waitms);
-    }
-
-    else if (leader_sequence_three_keys(KC_J, KC_Q, KC_L)) {
+    } else if (leader_sequence_three_keys(KC_J, KC_Q, KC_L)) {
         SEND_STRING_DELAY("jq -C '.' | less -R\n", ss_waitms);
 
     } else if (leader_sequence_two_keys(KC_E, KC_M)) {
