@@ -302,6 +302,16 @@ uint16_t sticky_mod_timer          = 0;
 bool     active_sticky_mod_pressed = false;
 int      ss_waitms                 = 20;
 
+/*
+
+if this sequence happens too quickly:
+
+    shift + other key + release shift + release other key
+
+then it gets interpreted as the tap key (i.e. tab / backspace) instead
+of shift; this fixes that behavior, but only for the shift key
+
+*/
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_TAB):
