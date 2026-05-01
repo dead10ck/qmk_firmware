@@ -424,6 +424,8 @@ void leader_end_user(void) {
         SEND_STRING_DELAY("skyler@dead10ck.dev", ss_waitms);
     } else if (leader_sequence_three_keys(KC_E, KC_M, KC_C)) {
         SEND_STRING_DELAY("skhawtho@cisco.com", ss_waitms);
+    } else if (leader_sequence_two_keys(KC_U, KC_N)) {
+        SEND_STRING_DELAY("dead10ck", ss_waitms);
     } else if (leader_sequence_two_keys(KC_N, KC_F)) {
         SEND_STRING_DELAY("Skyler", ss_waitms);
     } else if (leader_sequence_two_keys(KC_N, KC_L)) {
