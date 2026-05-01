@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define COMBO_MUST_HOLD_PER_COMBO
 #define COMBO_MUST_TAP_PER_COMBO
 
-#define LEADER_TIMEOUT 300
+#define LEADER_TIMEOUT 400
 #define LEADER_PER_KEY_TIMING
 #define LEADER_KEY_STRICT_KEY_PROCESSING
 
